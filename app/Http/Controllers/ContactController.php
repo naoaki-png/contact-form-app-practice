@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Tag;
+use App\Http\Requests\StoreContactRequest;
 
 class ContactController extends Controller
 {
@@ -11,14 +14,24 @@ class ContactController extends Controller
      */
     public function index()
     {
+        $categories = Category::all();
+        $tags = Tag::all();
+
+        return view('contact.index', compact('categories', 'tags'));
         //
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function confirm(StoreContactRequest $request)
     {
+        $validated = $request->all();
+
+        $category = Category::find($request->category_id);
+
+        return view('contact.confirm', compact('validated', 'category'));
+
         //
     }
 
