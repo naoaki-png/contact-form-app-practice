@@ -15,9 +15,10 @@ class Contact extends Model
         'last_name',
         'gender',
         'email',
-        'email',
+        'tel',
         'address',
-        'detail'
+        'detail',
+        'category_id',
     ];
 
     public function tags(): BelongsToMany
