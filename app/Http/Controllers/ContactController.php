@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Tag;
@@ -30,7 +31,10 @@ class ContactController extends Controller
 
         $category = Category::find($request->category_id);
 
-        return view('contact.confirm', compact('validated', 'category'));
+        $tags = Tag::find($request->tag_ids);
+
+
+        return view('contact.confirm', compact('validated', 'category', 'tags'));
 
         //
     }
@@ -38,16 +42,22 @@ class ContactController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreContactRequest $request)
     {
+        $contact = Contact::create($request->validated());
+        $contact->tags()->attach($request->tag_ids);
+
+        return redirect(route('contact.thanks'));
+
         //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function thanks()
     {
+        return view('contact.thanks');
         //
     }
 
