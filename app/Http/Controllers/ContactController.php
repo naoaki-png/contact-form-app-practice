@@ -47,7 +47,7 @@ class ContactController extends Controller
         $contact = Contact::create($request->validated());
         $contact->tags()->attach($request->tag_ids);
 
-        return redirect(route('contact.thanks'));
+        return redirect()->route('contact.thanks')->with('success', '正常に送信されました');
 
         //
     }
